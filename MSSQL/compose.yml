@@ -1,0 +1,13 @@
+version: "1"
+services:
+  sqldata:
+    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+    restart: always
+    container_name: MsSqlServer
+    environment:
+      - SA_PASSWORD=#sa2015!
+      - ACCEPT_EULA=Y
+    ports:
+      - "1433:1433"
+    volumes:
+      - ./volume:/var/opt/mssql/data
