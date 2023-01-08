@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  oracle:
+    container_name: oracle
+    image: gvenzl/oracle-xe:21-slim
+    restart: always
+    environment:
+      APP_USER: appuser
+      APP_USER_PASSWORD: oracle
+      ORACLE_PASSWORD: oracle
+      ORACLE_ALLOW_REMOTE: true
+      ORACLE_CHARACTERSET: AL32UTF
+    volumes:
+      - ./volume:/opt/oracle/oradata
+    networks:
+      - oracle_network
+    ports:
+      - "1521:1521"
+networks:
+  oracle_network: {}
