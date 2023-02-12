@@ -1,1 +1,2 @@
 # DockerContainers
+docker compose up
