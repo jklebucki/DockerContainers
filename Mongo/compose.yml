@@ -6,10 +6,14 @@ services:
     image: mongodb/mongodb-community-server
     restart: always
     container_name: mongo-server
+    ports:
+      - 27017:27017
     environment:
       MONGO_INITDB_DATABASE: test
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: Password2023!
+    volumes:
+      - ./volume:/data/db
 
   mongo-express:
     image: mongo-express
