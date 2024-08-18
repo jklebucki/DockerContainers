@@ -1,7 +1,7 @@
 version: "1"
 services:
   sqldata:
-    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+    image: mcr.microsoft.com/mssql/server:2019-latest
     restart: always
     container_name: MsSqlServer
     environment:
