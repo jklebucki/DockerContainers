@@ -1,8 +1,7 @@
-version: "3"
 services:
   mysql:
     container_name: mysql
-    image: mysql:5.7
+    image: mysql:8.0
     restart: always
     environment:
       MYSQL_ROOT_USER: root
@@ -13,14 +12,22 @@ services:
       - ./volume:/var/lib/mysql
     ports:
       - "3306:3306"
-    command: --character-set-server=utf8 --collation-server=utf8_general_ci
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
   phpmyadmin:
     container_name: phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     restart: always
     ports:
-      - 8080:80
+      - "8080:80"
     environment:
       PMA_HOST: mysql
-    links:
-      - mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
