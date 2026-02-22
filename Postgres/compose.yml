@@ -2,7 +2,7 @@ services:
   db:
     container_name: pg_container
     image: postgres:latest
-    restart: always
+    restart: unless-stopped
     shm_size: 1g
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: pguser@9000!
       POSTGRES_DB: test_db
     volumes:
-      - ./volume:/var/lib/postgresql/data
+      - /srv/docker/postgres/data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     command:
@@ -48,15 +48,14 @@ services:
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4:latest
-    restart: always
+    restart: unless-stopped
     environment:
       PGADMIN_DEFAULT_EMAIL: j.klebucki@ajksoftware.pl
       PGADMIN_DEFAULT_PASSWORD: Password2021!
     volumes:
-      - ./pgadmin_volume:/var/lib/pgadmin
+      - /srv/docker/postgres/pgadmin:/var/lib/pgadmin
     ports:
       - "5050:80"
     depends_on:
       db:
         condition: service_healthy
-
