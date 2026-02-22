@@ -28,6 +28,7 @@ services:
       - "8080:80"
     environment:
       PMA_HOST: mysql
+      UPLOAD_LIMIT: 200M
     depends_on:
       mysql:
         condition: service_healthy

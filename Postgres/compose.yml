@@ -5,8 +5,8 @@ services:
     restart: always
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: sasa
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pguser@9000!
       POSTGRES_DB: test_db
     volumes:
       - ./volume:/var/lib/postgresql/data

@@ -1,0 +1,20 @@
+services:
+  gotenberg:
+    image: gotenberg/gotenberg:8
+    ports:
+      - "3000:3000"
+    environment:
+      LOG_LEVEL: info
+      CHROMIUM_AUTO_START: "true"
+      LIBREOFFICE_AUTO_START: "true"
+      API_BODY_LIMIT: "100MB"
+    volumes:
+      - ./fonts:/usr/local/share/fonts:ro
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+
