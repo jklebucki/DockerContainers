@@ -3,8 +3,8 @@ services:
     container_name: mysql
     image: mysql:8.0
     restart: always
+    shm_size: 512m
     environment:
-      MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: sasa
       MYSQL_DATABASE: test_db
       LANG: C.UTF-8
@@ -12,7 +12,22 @@ services:
       - ./volume:/var/lib/mysql
     ports:
       - "3306:3306"
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --skip-name-resolve
+      - --innodb-buffer-pool-size=512M
+      - --innodb-log-file-size=256M
+      - --innodb-log-buffer-size=64M
+      - --innodb-flush-method=O_DIRECT
+      - --innodb-flush-log-at-trx-commit=2
+      - --innodb-io-capacity=2000
+      - --tmp-table-size=64M
+      - --max-heap-table-size=64M
+      - --table-open-cache=2048
+      - --thread-cache-size=64
+      - --max-connections=200
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 30s
